@@ -2,6 +2,16 @@
 
 An enterprise-grade, multi-modal cyber threat detection, correlation, and explainability platform built for high-tempo SOC investigation and cyber hackathons.
 
+## **[Open the live app →](https://cyber-threat-detection-24tr.onrender.com/)**
+
+> Hosted on Render's free plan. If the app has been idle, the first load takes about 50 seconds to wake up.
+
+**What it does**
+- Detects malicious network, log, message, and URL events using a hybrid rule-based + machine learning pipeline (RandomForest, XGBoost)
+- Explains each detection with SHAP/DiCE/Alibi-based explainability
+- Serves a SOC-style web console from a FastAPI backend
+
+**Tech stack:** Python, FastAPI, scikit-learn, XGBoost, SQLite, HTML/CSS/JavaScript, Docker, Render
 ---
 
 ## 🏗️ 4-Layer Architecture Overview
