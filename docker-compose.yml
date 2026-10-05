@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  aegis-xai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aegis-xai-soc
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - HOST=0.0.0.0
+      - API_KEY=cyber-sec-demo-key-2026
+      - REQUIRE_API_KEY=false
+      - CORS_ORIGINS=*
+      - DATABASE_PATH=/data/cyber_threats.db
+      - ABUSEIPDB_API_KEY=${ABUSEIPDB_API_KEY:-}
+      - VIRUSTOTAL_API_KEY=${VIRUSTOTAL_API_KEY:-}
+    volumes:
+      - aegis_data:/data
+      - aegis_models:/app/models
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  aegis_data:
+  aegis_models:

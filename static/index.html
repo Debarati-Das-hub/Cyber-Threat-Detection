@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AegisXAI | Explainable Cyber Threat Detection & Intelligence Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="soc-container">
+    <!-- Top Navigation Header -->
+    <header class="soc-header">
+      <div class="logo-area">
+        <div class="logo-icon">🛡️</div>
+        <div>
+          <h1>AEGIS-XAI <span class="badge-v2">v2.0 PRO</span></h1>
+          <p class="subtitle">Multi-Modal Threat Detection • Threat Intel • Explainable AI (DiCE & Alibi)</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="status-indicator">
+          <span class="pulse-dot"></span>
+          <span id="pipeline-status">Core Pipeline Online</span>
+        </div>
+        <button id="btn-run-demo" class="btn btn-primary glow-btn">
+          <span>⚡ Run Multi-Stage Attack Demo</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- KPI Metric Strip -->
+    <section class="kpi-strip">
+      <div class="kpi-card">
+        <span class="kpi-label">Active Incidents</span>
+        <span class="kpi-value alert-text" id="kpi-incidents">0</span>
+        <span class="kpi-sub">Clustered attack campaigns</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Telemetry Ingested</span>
+        <span class="kpi-value" id="kpi-events">0</span>
+        <span class="kpi-sub">Multi-modal events</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Critical Threat IOCs</span>
+        <span class="kpi-value warning-text" id="kpi-iocs">0</span>
+        <span class="kpi-sub">AbuseIPDB & VirusTotal verified</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Explainability Engine</span>
+        <span class="kpi-value success-text">DiCE + Alibi</span>
+        <span class="kpi-sub">Runtime Active & Calibrated</span>
+      </div>
+    </section>
+
+    <!-- Main Navigation Tabs -->
+    <nav class="soc-tabs">
+      <button class="tab-btn active" data-tab="tab-graph">🕸️ Threat & Evidence Graph</button>
+      <button class="tab-btn" data-tab="tab-ingest">📥 Telemetry Ingestion</button>
+      <button class="tab-btn" data-tab="tab-xai">🔬 Explainable AI & Report</button>
+      <button class="tab-btn" data-tab="tab-mitre">🎯 MITRE ATT&CK Matrix</button>
+      <button class="tab-btn" data-tab="tab-history">🗄️ Database History</button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="soc-main">
+      <!-- TAB 1: Force-Directed Graph -->
+      <section id="tab-graph" class="tab-pane active">
+        <div class="graph-layout">
+          <div class="graph-canvas-container">
+            <div class="canvas-controls">
+              <span class="graph-title">Interactive Force-Directed Threat Correlation Graph</span>
+              <div class="ctrl-buttons">
+                <button class="btn btn-xs" id="btn-zoom-in">➕ Zoom In</button>
+                <button class="btn btn-xs" id="btn-zoom-out">➖ Zoom Out</button>
+                <button class="btn btn-xs" id="btn-reset-graph">🔄 Reset View</button>
+              </div>
+            </div>
+            <canvas id="threatCanvas"></canvas>
+            <div class="graph-legend">
+              <span class="leg-item"><span class="leg-dot dot-cluster"></span> Incident Cluster</span>
+              <span class="leg-item"><span class="leg-dot dot-malicious"></span> Malicious Event</span>
+              <span class="leg-item"><span class="leg-dot dot-benign"></span> Benign Flow</span>
+              <span class="leg-item"><span class="leg-dot dot-ioc"></span> IOC (IP/Domain)</span>
+              <span class="leg-item"><span class="leg-dot dot-mitre"></span> MITRE Technique</span>
+              <span class="leg-item"><span class="leg-dot dot-rule"></span> Alibi Anchor Rule</span>
+            </div>
+          </div>
+          <!-- Node Inspector Sidebar -->
+          <div class="inspector-sidebar" id="node-inspector">
+            <div class="inspector-header">
+              <h3>🔍 Entity Inspector</h3>
+              <span class="badge" id="insp-type">Select a Node</span>
+            </div>
+            <div class="inspector-body" id="insp-content">
+              <p class="placeholder-text">Click on any node in the canvas graph to inspect its telemetry, threat intelligence scores, and AI reasoning.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: Ingestion & Attack Simulator -->
+      <section id="tab-ingest" class="tab-pane">
+        <div class="ingest-grid">
+          <div class="ingest-form-card">
+            <h3>Inject Multi-Modal Telemetry</h3>
+            <p class="section-desc">Select an event modality or load a pre-configured attack vector simulation.</p>
+
+            <div class="preset-strip">
+              <span>Attack Presets:</span>
+              <button class="btn btn-xs btn-outline preset-btn" data-preset="syn_flood">DoS SYN Flood</button>
+              <button class="btn btn-xs btn-outline preset-btn" data-preset="phish_email">Phishing Email</button>
+              <button class="btn btn-xs btn-outline preset-btn" data-preset="c2_beacon">C2 Beaconing</button>
+              <button class="btn btn-xs btn-outline preset-btn" data-preset="ssh_brute">SSH Brute Force</button>
+              <button class="btn btn-xs btn-outline preset-btn" data-preset="benign_web">Clean HTTP Flow</button>
+            </div>
+
+            <div class="form-group">
+              <label for="event-modality">Event Modality</label>
+              <select id="event-modality" class="form-control">
+                <option value="network">Network Flow (NSL-KDD 8-Features)</option>
+                <option value="message">Message / Email (Phishing Detector)</option>
+                <option value="url">URL / Proxy (Lexical & Entropy)</option>
+                <option value="log">Authentication & Syslog</option>
+                <option value="file">Endpoint File / Malware</option>
+              </select>
+            </div>
+
+            <div id="dynamic-form-fields">
+              <!-- Dynamically populated based on modality -->
+            </div>
+
+            <button id="btn-submit-event" class="btn btn-primary btn-block">🚀 Analyze Event with 4-Layer Pipeline</button>
+          </div>
+
+          <div class="recent-events-card">
+            <h3>Pipeline Stream Feed</h3>
+            <div class="event-feed-list" id="pipeline-feed">
+              <p class="placeholder-text">Run the demo or submit an event to view real-time pipeline classifications.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: Explainable AI & Report -->
+      <section id="tab-xai" class="tab-pane">
+        <div class="xai-container">
+          <div class="xai-left-panel">
+            <h3>Active Incident Clusters</h3>
+            <div class="cluster-selector-list" id="cluster-list">
+              <p class="placeholder-text">No incidents analyzed yet. Run Demo above.</p>
+            </div>
+
+            <div class="xai-card" id="alibi-card">
+              <h4>🎯 Alibi Sufficient Condition Anchors</h4>
+              <p class="card-caption">IF-THEN rules generated by Alibi AnchorTabular with high precision.</p>
+              <div id="alibi-rules-container">
+                <p class="placeholder-text">Awaiting event analysis...</p>
+              </div>
+            </div>
+
+            <div class="xai-card" id="dice-card">
+              <h4>🔄 DiCE Counterfactual Explanations</h4>
+              <p class="card-caption">What minimal feature changes flip the classification to Benign?</p>
+              <div id="dice-cf-container">
+                <p class="placeholder-text">Awaiting event analysis...</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="xai-right-panel">
+            <div class="report-header-bar">
+              <h3>📄 SOC Incident Investigation Report</h3>
+              <button class="btn btn-sm btn-outline" id="btn-copy-report">📋 Copy Report Markdown</button>
+            </div>
+            <div class="report-markdown-view" id="report-view">
+              <p class="placeholder-text">Execute pipeline or click on an incident to view automated SOC executive report.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: MITRE ATT&CK Matrix -->
+      <section id="tab-mitre" class="tab-pane">
+        <div class="mitre-container">
+          <div class="mitre-header">
+            <h3>Enterprise MITRE ATT&CK Kill-Chain Mapping</h3>
+            <p class="section-desc">Active techniques highlighted in real-time as threats are detected and correlated.</p>
+          </div>
+          <div class="mitre-matrix-grid" id="mitre-grid">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: Persistence History -->
+      <section id="tab-history" class="tab-pane">
+        <div class="history-container">
+          <div class="history-header">
+            <h3>🗄️ Persistent SQLite Incident Log</h3>
+            <button class="btn btn-sm btn-outline" id="btn-refresh-history">🔄 Refresh</button>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Incident ID</th>
+                  <th>Created At</th>
+                  <th>Risk Score</th>
+                  <th>Correlated Events</th>
+                  <th>Tracked IOCs</th>
+                  <th>Executive Summary</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="history-table-body">
+                <tr><td colspan="7" class="placeholder-text">Loading incidents...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="soc-footer">
+      <span>AEGIS-XAI Cyber Platform • Built for Cyber Hackathon</span>
+      <span>NSL-KDD 8-Feature Schema • AbuseIPDB v2 • VirusTotal v3 • DiCE & Alibi AnchorTabular</span>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
